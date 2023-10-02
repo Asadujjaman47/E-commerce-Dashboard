@@ -1,14 +1,29 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
 
-    const [name, setName] = useState("");
-    const [password, setPassword] = useState("");
-    const [email, setEmail] = useState("");
+  const navigate = useNavigate();
 
-    const collectData = () => {
-        console.log(name, email, password);
+  const collectData = async () => {
+    console.log(name, email, password);
+    let result = await fetch("http://localhost:5000/register", {
+      method: "post",
+      body: JSON.stringify({ name, email, password }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+     result = await result.json();
+     console.warn(result);
+
+    if (result) {
+      navigate("/");
     }
+  };
 
   return (
     <div className="register">
@@ -34,7 +49,12 @@ const SignUp = () => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <input onClick={collectData} className="appButton" type="button" value="Sign Up" />
+      <input
+        onClick={collectData}
+        className="appButton"
+        type="button"
+        value="Sign Up"
+      />
     </div>
   );
 };
