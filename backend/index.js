@@ -38,14 +38,32 @@ app.use(express.json());
 // use cors
 app.use(cors());
 
-// create route
+// SIGN UP route
 app.post("/register", async (req, res) => {
   // res.send("api in progress...");
 
   let user = new User(req.body);
   let result = await user.save();
 
-  res.send(req.body);
+  result = result.toObject();
+  delete result.password;
+  res.send(result);
+});
+
+// LOG IN
+app.post("/login", async (req, res) => {
+  console.log(req.body);
+
+  let user = await User.findOne(req.body).select("-password");
+  if (req.body.password && req.body.email) {
+    if (user) {
+      res.send(user);
+    } else {
+      res.send({ result: "No User Found" });
+    }
+  } else {
+    res.send({ result: "No User Found" });
+  }
 });
 
 app.listen(5000);
