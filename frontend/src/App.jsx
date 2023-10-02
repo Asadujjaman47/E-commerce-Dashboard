@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Nav from "./components/Nav";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         </Routes>
         {/* <h1>E-Dashboard</h1> */}
       </BrowserRouter>
+      <Footer/>
     </div>
   );
 }
