@@ -1,33 +1,47 @@
-const express = require('express');
-const mongoose = require("mongoose");
-
+const express = require("express");
+// const mongoose = require("mongoose");
+require("./db/config");
+const User = require("./db/User");
 
 const app = express();
 
 // mongodb connection
 // mongoose.connect("mongodb://127.0.0.1:27017/e-comm");
 
-
 // app.get("/", (req, res) => {
 //     res.send("app is working...");
 // })
 
-const connectDB = async() => {
-    mongoose.connect("mongodb://127.0.0.1:27017/e-comm");
+// mongo test
+// const connectDB = async() => {
+//     mongoose.connect("mongodb://127.0.0.1:27017/e-comm");
 
-    // model 
-    const productSchema = new mongoose.Schema({});
+//     // model
+//     const productSchema = new mongoose.Schema({});
 
-    // model(collection , Schema)
-    const product = mongoose.model('product', productSchema);
-    
-    // find product
-    const data = await product.find();
+//     // model(collection , Schema)
+//     const product = mongoose.model('product', productSchema);
 
-    console.log(data);
-}
+//     // find product
+//     const data = await product.find();
 
-connectDB();
+//     console.log(data);
+// }
 
+// connectDB();
+// ----------------------------------------------------------------------
+
+// convert json
+app.use(express.json());
+
+// create route
+app.post("/register", async (req, res) => {
+  // res.send("api in progress...");
+
+  let user = new User(req.body);
+  let result = await user.save();
+
+  res.send(req.body);
+});
 
 app.listen(5000);
