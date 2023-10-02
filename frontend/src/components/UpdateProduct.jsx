@@ -7,6 +7,7 @@ const UpdateProduct = () => {
   const [category, setCategory] = React.useState("");
   const [company, setCompnay] = React.useState("");
   const params = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     // console.log(param);
@@ -27,7 +28,22 @@ const UpdateProduct = () => {
   };
 
   const updateProduct = async () => {
-    console.log(name, price, category, company);
+    // console.log(name, price, category, company);
+
+    let result = await fetch(`http://localhost:5000/product/${params.id}`, {
+      method: "Put",
+      body: JSON.stringify({ name, price, category, company }),
+      headers: {
+        "Content-Type": "Application/json",
+      },
+    });
+
+    result = await result.json();
+
+    if(result) {
+      // console.log(result);
+      navigate('/');
+    }
   };
 
   return (
