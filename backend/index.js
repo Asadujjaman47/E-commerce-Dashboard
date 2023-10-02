@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 // const mongoose = require("mongoose");
 require("./db/config");
 const User = require("./db/User");
@@ -33,6 +34,9 @@ const app = express();
 
 // convert json
 app.use(express.json());
+
+// use cors
+app.use(cors());
 
 // create route
 app.post("/register", async (req, res) => {
