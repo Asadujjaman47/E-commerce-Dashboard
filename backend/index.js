@@ -93,4 +93,14 @@ app.delete("/product/:id", async (req, res) => {
   res.send(result);
 });
 
+// GET SINGLE PRODUCT BY ID
+app.get("/product/:id", async (req, res) => {
+  let result = await Product.findOne({ _id: req.params.id });
+  if (result) {
+    res.send(result);
+  } else {
+    res.send({ result: "No Products found" });
+  }
+});
+
 app.listen(5000);
