@@ -3,6 +3,7 @@ const cors = require("cors");
 // const mongoose = require("mongoose");
 require("./db/config");
 const User = require("./db/User");
+const Product = require("./db/Product");
 
 const app = express();
 
@@ -65,5 +66,14 @@ app.post("/login", async (req, res) => {
     res.send({ result: "No User Found" });
   }
 });
+
+// ADD PRODUCT
+app.post("/add-product", async(req, res) => {
+  let product = new Product(req.body);
+  let result = await product.save();
+
+
+  res.send(result);
+})
 
 app.listen(5000);
