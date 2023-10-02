@@ -5,6 +5,9 @@ require("./db/config");
 const User = require("./db/User");
 const Product = require("./db/Product");
 
+const Jwt = require("jsonwebtoken");
+const jwtKey = "e-comm";
+
 const app = express();
 
 // mongodb connection
@@ -48,7 +51,16 @@ app.post("/register", async (req, res) => {
 
   result = result.toObject();
   delete result.password;
-  res.send(result);
+  // res.send(result);
+
+  Jwt.sign({ result }, jwtKey, { expiresIn: "2h" }, (err, token) => {
+    if (err) {
+      res.send({
+        result: "something went wrong, Please try after sometime",
+      });
+    }
+    res.send({ result, auth: token });
+  });
 });
 
 // LOG IN
@@ -58,7 +70,14 @@ app.post("/login", async (req, res) => {
   let user = await User.findOne(req.body).select("-password");
   if (req.body.password && req.body.email) {
     if (user) {
-      res.send(user);
+      Jwt.sign({ user }, jwtKey, { expiresIn: "2h" }, (err, token) => {
+        if (err) {
+          res.send({
+            result: "something went wrong, Please try after sometime",
+          });
+        }
+        res.send({ user, auth: token });
+      });
     } else {
       res.send({ result: "No User Found" });
     }
