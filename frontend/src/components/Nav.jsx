@@ -25,6 +25,9 @@ export default function Nav() {
         <li>
           <Link to="/logout"> Logout</Link>
         </li>
+        <li>
+          <Link to="/signup"> Sign Up</Link>
+        </li>
       </ul>
     </div>
   );
