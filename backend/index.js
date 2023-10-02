@@ -103,4 +103,18 @@ app.get("/product/:id", async (req, res) => {
   }
 });
 
+// UPDATE PRODUCT
+app.put("/product/:id", async(req, res) => {
+  let result = await Product.updateOne(
+    {
+      _id: req.params.id
+    },
+    {
+      $set : req.body
+    }
+  )
+
+  res.send(result);
+});
+
 app.listen(5000);
