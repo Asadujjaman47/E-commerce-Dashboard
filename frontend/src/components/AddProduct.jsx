@@ -21,6 +21,7 @@ const AddProduct = () => {
       body: JSON.stringify({ name, price, category, company, userId }),
       headers: {
         "Content-type": "application/json",
+        authorization: `bearer ${JSON.parse(localStorage.getItem("token"))}`,
       },
     });
     result = await result.json();
@@ -81,7 +82,7 @@ const AddProduct = () => {
       {error && !company && (
         <span className="invalid-input">Enter valid company</span>
       )}
-      
+
       <button onClick={addProduct} className="appButton">
         Add Product
       </button>
