@@ -5,11 +5,11 @@ export default function Nav() {
   const auth = localStorage.getItem("user");
   const navigate = useNavigate();
 
-  const logout = ()=> {
+  const logout = () => {
     // console.warn("apple");
     localStorage.clear();
-    navigate('/signup');
-  }
+    navigate("/signup");
+  };
 
   return (
     <div>
@@ -33,16 +33,22 @@ export default function Nav() {
           <Link to="/profile">Profile</Link>
         </li>
 
-        <li>
-          {auth ? (
-            <Link onClick={logout} to="/signup"> Logout</Link>
-          ) : (
-            <Link to="/signup"> Sign Up</Link>
-          )}
-        </li>
-        <li>
-          <Link to="/login">Login</Link>
-        </li>
+        {auth ? (
+          <li>
+            <Link onClick={logout} to="/signup">
+              Logout
+            </Link>
+          </li>
+        ) : (
+          <>
+            <li>
+              <Link to="/signup"> Sign Up</Link>
+            </li>
+            <li>
+              <Link to="/login">Login</Link>
+            </li>
+          </>
+        )}
       </ul>
     </div>
   );
